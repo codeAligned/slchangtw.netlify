@@ -2,13 +2,12 @@
 markdown:         kramdown
 highlighter:      rouge
 
-
 # Permalinks
 permalink:        pretty
 
 # Setup
 title:            Shun-Lung's Blog
-description:      'Programming / Data Science'
+description:      'Data Science'
 baseurl:          /
 
 author:           Shun-Lung, Chang
@@ -18,6 +17,6 @@ url:              https://connerchang.github.io/
 paginate:         5
 
 # Custom vars
-version:          0.1.0
-
-github:           https://github.com/ConnerChang         
+mail_address:      edi7709@gmail.com
+github_username:   connerchang
+linkedin_username: connerchang
