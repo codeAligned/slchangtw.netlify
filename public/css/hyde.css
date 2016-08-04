@@ -65,7 +65,7 @@ html {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 16rem; /* the width of the side bar */ 
+    width: 17rem; /* the width of the side bar */ 
     text-align: center;
   }
 }
@@ -79,6 +79,7 @@ html {
 .sidebar-about h1 {
   color: #fff;
   margin-top: 0;
+  font-family: "Abril Fatface", serif;
   font-size: 2.5rem; /* font size of the blog's title */
 }
 
@@ -162,6 +163,8 @@ a.sidebar-nav-item:focus {
     margin-right: 22rem;
   }
 }
+
+
 
 /*
  * Themes

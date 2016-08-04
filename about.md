@@ -3,28 +3,10 @@ layout: page
 title: About me
 ---
 
-<p class="message">
-  Hey there! This page is included as an example. Feel free to customize it for your own use upon downloading. Carry on!
-</p>
+Hi, my name is Shun-Lung Chang (張舜龍), or you can call my English name Conner.
 
-In the novel, *The Strange Case of Dr. Jeykll and Mr. Hyde*, Mr. Poole is Dr. Jekyll's virtuous and loyal butler. Similarly, Poole is an upstanding and effective butler that helps you build Jekyll themes. It's made by [@mdo](https://twitter.com/mdo).
+I am now working as an data analyst, and adept at python and R programming. To be more specific, I build web crawlers and perform text mining through python. For data cleaning and visualization, I use R more often. Besides, for data analyzing and modeling, I am able to use machine learning techniques implemented in the python scikit-learn package and R packages to constuct a satisfactory data model and interpret its results.
 
-There are currently two themes built on Poole:
+Furthermore, I have studied how to analyze data on a distributed computing platform (especially on Spark). Also, I am highly interested in Docker, which helps me to build a productive development environment in a speedy manner.
 
-* [Hyde](http://hyde.getpoole.com)
-* [Lanyon](http://lanyon.getpoole.com)
-
-Learn more and contribute on [GitHub](https://github.com/poole).
-
-## Setup
-
-Some fun facts about the setup of this project include:
-
-* Built for [Jekyll](http://jekyllrb.com)
-* Developed on GitHub and hosted for free on [GitHub Pages](https://pages.github.com)
-* Coded with [Sublime Text 2](http://sublimetext.com), an amazing code editor
-* Designed and developed while listening to music like [Blood Bros Trilogy](https://soundcloud.com/maddecent/sets/blood-bros-series)
-
-Have questions or suggestions? Feel free to [open an issue on GitHub](https://github.com/poole/issues/new) or [ask me on Twitter](https://twitter.com/mdo).
-
-Thanks for reading!
+I would write my posts either in Taiwan Madarian or English, if you want to correct mistakes or resolve ambiguity in my posts, feel free to contact me. You can leave a comment or email me, I would be grateful for your comments and corrections.
