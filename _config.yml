@@ -5,6 +5,8 @@ highlighter:      rouge
 # Permalinks
 permalink:        pretty
 
+excerpt_separator: <!--more-->
+
 # Setup
 title:            Shun-Lung's Blog
 description:      'Data Science'
