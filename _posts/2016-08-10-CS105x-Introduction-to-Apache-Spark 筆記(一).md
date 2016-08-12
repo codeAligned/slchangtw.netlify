@@ -76,11 +76,16 @@ Spark DataFrame 的 Action 操作包含印出資料、計算資料筆數與計�
 
 ![alt text](/images/20160810_action_1.png)
 
-在執行各種操作中，會有一些反覆使用到的 DataFrames, 此時可使用 .cache() 將這些 DataFrames 快取到記憶體中，減少重複運算。課程中整理出透過 Spark DataFrame 進行分析的生命週期如下圖。
+在執行各種操作中，會有一些反覆使用到的 DataFrames, 此時可使用將這些 DataFrames 快取到記憶體中，減少重複運算。語法如下：
+
+```
+df.cache() //將 df 這個 DataFrame 快取到記憶體中
+```
+因此，透過上述的過程，匯入資料、進行 Transformation 與 Action 操作，並快取某些 DataFrames 到記憶體中，課程中整理出以 Spark DataFrame 進行分析的週期如下圖。
 
 ![alt text](/images/20160810_lifecycle.png)
 
-最後，Spark 其實有分為 Driver 和多個 Executors. Spark 運行程式是在 Driver 中，而 Transfomation 的操作是在 Executors 中執行，而 Action 是在 Driver 和 Executors 完成。而必須注意的是，通常在觀察資料時會使用 collect() 這個 Action 操作，但一旦執行後，會將所有分散在 Executors 的資料拉回到 Driver 中而導致 Out of memory. 因此，若要查看資料，建議使用 take(n) 這個 Action 操作。此外，撰寫 Spark 程式時，盡量多翻閱[文件](http://spark.apache.org/docs/latest/api/python/pyspark.sql.html)查看是否有 api 可以達到所想要的目的，並充分使用到 Spark Driver-Executors 架構下的效能。
+最後，Spark 執行運算時是採 Driver 和多個 Executors 的架構. Spark 運行程式是在 Driver 中，而 Transfomation 的操作是在 Executors 中執行，而 Action 是在 Driver 和 Executors 完成。而必須注意的是，通常在觀察資料時會使用 collect() 這個 Action 操作，但一旦執行後，會將所有分散在 Executors 的資料拉回到 Driver 中而導致 Out of memory. 因此，若要查看資料，建議使用 take(n) 這個 Action 操作。此外，撰寫 Spark 程式時，盡量多翻閱[文件](http://spark.apache.org/docs/latest/api/python/pyspark.sql.html)查看是否有 api 可以達到所想要的目的，並充分使用到 Spark Driver-Executors 架構下的效能。
 
 ## Spark RDD 補充文件
 
