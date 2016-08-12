@@ -44,4 +44,13 @@ gather(data, key = date, value = quantity, 3:12)
 spread(long_data, key = date, value = quantity)
 ```
 
+額外補充，若要透過 Python pandas 做到寬格式轉換成長格式，可透過 melt(), 語法如下所示：
+
+<img src="/images/20160812_wide_to_long_pandas.png" width="400" height="150">
+
 總言之，此篇文章說明寬與長兩種格式的資料，與寬格式在作資料匯總的劣勢。最後說明如何透過 R 套件語法快速轉換兩種格式。
+
+### 參考文件
+
+- [The Wide and Long Data Format for Repeated Measures Data](http://www.theanalysisfactor.com/wide-and-long-data/)
+- [Tidy Data](https://ramnathv.github.io/pycon2014-r/explore/tidy.html)
