@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "從 excel 樞紐分析表學習 R 的 dplyr"
+title: "從 Excel 樞紐分析表學習 R 的 dplyr"
 author: Shun-Lung Chang
 ---
 
 <p class="message">
-對於經常使用 excel 用戶而言，樞紐分析表是做資料初步整理分析的常用工具，例如計算資料筆數、變數平均等。這篇文章會說明如何透過樞紐分析表來學習 R language 的 dplyr 套件，以幫助 excel 用戶學習以 R 整理資料。
+對於經常使用 Excel 用戶而言，樞紐分析表是做資料初步整理分析的常用工具，例如計算資料筆數、變數平均等。這篇文章會說明如何透過樞紐分析表來學習 R language 的 dplyr 套件，以幫助 Excel 用戶學習以 R 整理資料。
 </p>
 
 <!--more-->
