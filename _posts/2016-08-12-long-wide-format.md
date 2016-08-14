@@ -26,25 +26,25 @@ author: Shun-Lung Chang
 
 <img src="/images/20160812_long_pivot.png" width="280" height="200">
 
-從上面可看出長格式在資料匯總的優勢。然而，我們無法要求資料一定要是長格式。更常發生的情境會是我們拿到寬格式的資料，再手動轉換成長格式。[此文](http://www.listendata.com/2015/02/excel-formula-convert-data-from-wide-to.html)有說明如何以 Excel 進行轉換。但是，若這件工作是每日例行作業就會十分擾人。當然，Excel 可以透過 VBA 完成自動化流程，但撰寫程式碼的過程也會十分冗長。但如果透過 R, 僅僅只要一行語法就可以快速轉換兩種格式，而不用說還可以透過 R 進行更多的統計分析與視覺化。
+從上面可看出長格式在資料匯總的優勢。然而，我們無法要求資料一定要是長格式。更常發生的情境會是我們拿到寬格式的資料，再手動轉換成長格式。[此文](http://www.listendata.com/2015/02/excel-formula-convert-data-from-wide-to.html)有說明如何以 Excel 進行轉換。但是，若這件工作是每日例行作業就會十分擾人。當然，Excel 可以透過 VBA 完成自動化流程，但撰寫程式碼的過程也會十分冗長。但如果透過 R， 僅僅只要一行語法就可以快速轉換兩種格式，而不用說還可以透過 R 進行更多的統計分析與視覺化。
 
-在 R 中達成轉換的任務是使用 tidyr 套件的 gather() 與 spread(). gather() 的關鍵是 key 和 value 的搭配與要轉換的欄位。以前面的寬資料來說，gather() 語法如下：
+在 R 中達成轉換的任務是使用 tidyr 套件的 gather() 與 spread()。gather() 的關鍵是 key 和 value 的搭配與要轉換的欄位。以前面的寬資料來說，gather() 語法如下：
 
 ```
 gather(data, key = date, value = quantity, 3:12)
 ```
 
-語法的第一個參數是要轉換的資料，key 表示要彙整舊欄位之後產生新欄位的變數名稱，以此例來說，我們要匯總各個日期欄位，因此 key 命名為 date. value 為值的變數名稱。而最後的參數表示的是要匯總的欄位，此例為第 3 行到第 12 行。透過上面的語法，可將寬格式轉換成長格式如下圖。
+語法的第一個參數是要轉換的資料，key 表示要彙整舊欄位之後產生新欄位的變數名稱，以此例來說，我們要匯總各個日期欄位，因此 key 命名為 date。value 為值的變數名稱。而最後的參數表示的是要匯總的欄位，此例為第 3 行到第 12 行。透過上面的語法，可將寬格式轉換成長格式如下圖。
 
 <img src="/images/20160812_long_in_rstudio.png" width="280" height="200">
 
-反之，若要透過 R 將長格式轉成寬格式，需要透過 spread(). 以前例來說，spread() 語法如下。可看出 spread() 語法的參數跟 gather() 相近，只是兩者作相反的轉換。更多的例子可參考[說明文件](https://cran.r-project.org/web/packages/tidyr/tidyr.pdf)。
+反之，若要透過 R 將長格式轉成寬格式，需要透過 spread()。以前例來說，spread() 語法如下。可看出 spread() 語法的參數跟 gather() 相近，只是兩者作相反的轉換。更多的例子可參考[說明文件](https://cran.r-project.org/web/packages/tidyr/tidyr.pdf)。
 
 ```
 spread(long_data, key = date, value = quantity)
 ```
 
-額外補充，若要透過 Python pandas 做到寬格式轉換成長格式，可透過 melt(), 語法如下所示：
+額外補充，若要透過 Python pandas 做到寬格式轉換成長格式，可透過 melt()， 語法如下所示：
 
 <img src="/images/20160812_wide_to_long_pandas.png" width="400" height="150">
 

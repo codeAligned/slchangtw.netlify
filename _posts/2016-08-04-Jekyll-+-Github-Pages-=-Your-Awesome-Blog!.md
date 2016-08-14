@@ -16,7 +16,7 @@ author: Shun-Lung Chang
 
 ## 建立部落格
 
-首先，要使用 [Github Pages](https://pages.github.com/) 的功能，需要先在 Github 新增一個空儲存庫 (Repository), 直接以`帳號名稱.github.io`命名。建立好空儲存庫後，若要節省自己從頭建立部落格的時間，建議直接套用別人寫好的版型。版型可參考[jekyllthemes.org](jekyllthemes.org)。套用方法是將空儲存庫`git clone`拉回本機，之後再到本機的空儲存庫中`git clone`他人的存放版型的 Github 儲存庫 到本機，再開始進行修改。而在修改過程中，可透過[此文件](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/)(Step 1可忽略) 安裝 Jekyll 建立本地預覽功能，預覽指令為`bundle exec jekyll serve`. 當修改完後，將儲存庫推回 Github, 便會自動產生部落格頁面，網址為 `帳號名稱.github.io`.
+首先，要使用 [Github Pages](https://pages.github.com/) 的功能，需要先在 Github 新增一個空儲存庫 (Repository)，直接以`帳號名稱.github.io`命名。建立好空儲存庫後，若要節省自己從頭建立部落格的時間，建議直接套用別人寫好的版型。版型可參考[jekyllthemes.org](jekyllthemes.org)。套用方法是將空儲存庫`git clone`拉回本機，之後再到本機的空儲存庫中`git clone`他人的存放版型的 Github 儲存庫 到本機，再開始進行修改。而在修改過程中，可透過[此文件](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/)(Step 1可忽略) 安裝 Jekyll 建立本地預覽功能，預覽指令為`bundle exec jekyll serve`. 當修改完後，將儲存庫推回 Github, 便會自動產生部落格頁面，網址為 `帳號名稱.github.io`.
 
 此外，我一開始參考的版型是 [Hyde] (https://github.com/poole/hyde), 但老實說此版型已經年久失修，因此建議採用其他版型。然而，會使用此版型的原因主要是參考到[此部落格](https://rhadow.github.io/2015/02/18/Jekyll-x-Github-x-Blog-Part1/)，其中有說明 Hype 的架構。此外[此篇](https://rhadow.github.io/2015/02/20/Jekyll-x-Github-x-Blog-Part2/)有整理如何建立部落格相關功能，亦可以參考如何實作。
 
@@ -25,6 +25,10 @@ author: Shun-Lung Chang
 ## 新增外部連結與對應 icons
 
 在部落格中，為了要連到個人的社群網站，例如 twitter, facebook 等，需在部落格新增外部連結並用 icon 表示。增加方式可參考[此頁](https://blog.r3bl.me/en/simple-social-media-links-jekyll/)。主要重點是`head.html`要新增[此 css](http://fontawesome.io/) 連結，與在 `_config.yml` 新增社群網站的帳號，最後在欲出現 icons 的區塊 html 檔(以我的部落格為例，就是在側邊欄的`sidebar.html`中)新增程式碼。
+
+## 新增 Archives 到側邊欄
+
+首先增加 `Archive.md` 到主資料夾，接著再設定日期與標題出現方式。可參考我的 [Archive.md 檔案](https://github.com/ConnerChang/connerchang.github.io/blob/master/Archive.md)。
 
 
 
