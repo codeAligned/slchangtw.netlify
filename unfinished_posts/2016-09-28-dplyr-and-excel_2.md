@@ -155,15 +155,6 @@ inner_join(d1, d2, by = "id")
 
 另外若要回傳資料要保留 d1 所有的 id (如同 Excel 內的 vlookup())， d2 沒有的 id 的資料就以 NA 表示，則可以用 **left_join()**。範例如下。
 
-```
-left_join(d1, d2, by = "id")
-
-   id a b  c  d
-1 id1 3 5  3  6
-2 id2 4 6  2  5
-3 id3 5 7 NA NA
-```
-
 ## 總結
 
 本篇文章介紹函數可整理如下。

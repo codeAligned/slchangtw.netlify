@@ -164,6 +164,12 @@ left_join(d1, d2, by = "id")
 3 id3 5 7 NA NA
 ```
 
+## 總結
 
+本篇文章介紹函數可整理如下。
 
-
+- 產生新欄位: mutate()
+- 篩選列資料: filter()
+- 篩選行欄位: select()
+- 以列合併資料: rbind()
+- 以行合併資料: inner_join(), left_join()
