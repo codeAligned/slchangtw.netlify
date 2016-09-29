@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "從 Excel 樞紐分析表學習 R 的 dplyr"
+title: "從 Excel 學習 R 的 dplyr"
 author: Shun-Lung Chang
 ---
 
