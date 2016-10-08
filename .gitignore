@@ -1,6 +1,6 @@
 #ignore docs files
 _site/
-_unfinished_posts
+unfinished_posts
 
 #Gemfiles
 Gemfile

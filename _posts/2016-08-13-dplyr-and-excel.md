@@ -106,7 +106,7 @@ titanic %>%
 - 列標籤：group_by()
 - 個值：summarise()
 
-最後，在 R 中可以透過 rpivotTable 建立互動式樞紐分析表，可再嵌入 R markdown 中做成報告，可參考[此處](https://rawgit.com/ConnerChang/blog_examples/master/dplyr_pivottable.html)。
+最後，在 R 中可以透過 rpivotTable 建立互動式樞紐分析表，可再嵌入 R markdown 中做成報告，可參考[此處](https://rawgit.com/ConnerChang/blog_examples/master/dplyr_excel.html)。
 
 ## 補充文件
 
