@@ -4,7 +4,7 @@ title: "edX Berkerley CS105x Introduction to Apache Spark 筆記(一)"
 author: Shun-Lung Chang
 ---
 
-本系列紀錄我 [Data Science and Engineering with Apache Spark](https://www.edx.org/xseries/data-science-engineering-apache-spark) 的上課與作業筆記。本文為 Introduction to Apache Spark Week 1 的筆記。
+本系列紀錄 [Data Science and Engineering with Apache Spark](https://www.edx.org/xseries/data-science-engineering-apache-spark) 的上課與作業筆記。本文為 Introduction to Apache Spark Week 1 的筆記。
 
 <!--more-->
 
