@@ -2,5 +2,4 @@
 
 Please visit [https://connerchang.github.io/](https://connerchang.github.io/).
 
-The blog is built by [jekyll](http://jekyllrb.com/) and modified from [Hyde theme](https://github.com/poole/hyde).
-
+The blog is published with [jekyll](http://jekyllrb.com/) and [Amplify](https://github.com/ageitgey/amplify).

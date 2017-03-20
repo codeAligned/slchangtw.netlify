@@ -1,24 +1,33 @@
-# Dependencies
-markdown:         kramdown
-highlighter:      rouge
+# Welcome to Amplified for Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
 
-# Permalinks
-permalink:        pretty
+# Site settings
+title: Shun-Lung's Blog
+email: edi7709@gmail.com
+description: Data Science
+baseurl: "" # the subpath of your site, e.g. /blog
+url: https://connerchang.github.io/ # the base hostname & protocol for your site
+paginate:	5 # The number of posts to show per page on your homepage
+logo: "/images/logo.png"
 
-excerpt_separator: <!--more-->
-
-# Setup
-title:            Shun-Lung's Blog
-description:      'Data Science'
-baseurl:          /
-
-author:           Shun-Lung, Chang
-name:             'Shun-Lung, Chang'
-url:              https://connerchang.github.io/
-
-paginate:         5
-
-# Custom vars
-mail_address:      edi7709@gmail.com
-github_username:   connerchang
+name: 'Shun-Lung Chang'
 linkedin_username: connerchang
+
+# Google Analytics
+analytics_id: ""
+
+# Build settings
+markdown: kramdown
+
+kramdown:
+  parse_block_html: true
+
+gems:
+  - jekyll-paginate
+
+excerpt_separator: 
+  <!--more-->
