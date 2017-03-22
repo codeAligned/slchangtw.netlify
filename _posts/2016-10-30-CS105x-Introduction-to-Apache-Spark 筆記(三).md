@@ -17,3 +17,10 @@ Apache Web Server Log Format 會包含如下的內容：
 
 例子如下：
 127.0.0.1 - - [01/Aug/1995:00:00:01-W0400] "GET /images/launchWlogo.gif HTTP/1.0" 200 1839
+
+此例中 [User identity from remote machine] 與 [User identity from local logon] 皆為 - ，表示 not available。
+
+## Lab Exercises
+
+練習從第四部分開始，主要還是複習 `df.select()` 與 `df.groupBy("column name")` 的語法。另外 `df.distinct()` 可回傳沒有重複列的 dataframe。
+
