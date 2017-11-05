@@ -1,11 +1,3 @@
 #ignore docs files
-_site/
 unfinished_posts
-
-#Gemfiles
-Gemfile
-Gemfile.lock
-
-# OS folders
-.DS_Store
 

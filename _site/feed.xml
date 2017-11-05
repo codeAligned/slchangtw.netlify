@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shun-Lung's Blog</title>
+    <description>Data Science</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 20 Mar 2017 23:04:02 +0800</pubDate>
+    <lastBuildDate>Mon, 20 Mar 2017 23:04:02 +0800</lastBuildDate>
+    <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>edX Berkerley CS105x Introduction to Apache Spark 筆記(三)</title>
+        <description>&lt;p class=&quot;message&quot;&gt;
+本系列紀錄 &lt;a href=&quot;https://www.edx.org/xseries/data-science-engineering-apache-spark&quot;&gt;Data Science and Engineering with Apache Spark&lt;/a&gt; 的上課與作業筆記。本文為 Introduction to Apache Spark Week 3 的筆記。
+&lt;/p&gt;
+
+&lt;!--more--&gt;
+</description>
+        <pubDate>Sun, 30 Oct 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/10/30/CS105x-Introduction-to-Apache-Spark-%E7%AD%86%E8%A8%98(%E4%B8%89).html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/10/30/CS105x-Introduction-to-Apache-Spark-%E7%AD%86%E8%A8%98(%E4%B8%89).html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Tidy Data</title>
+        <description>&lt;p&gt;在之前的文章中，已介紹資料的長格式與寬格式。延續此介紹，本文說明另外一種資料格式 - Tidy Data。並說明 Tidy Data 與長寬格式資料的關係。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;本文源於 Hadley Wickham 說明 &lt;a href=&quot;http://vita.had.co.nz/papers/tidy-data.pdf&quot;&gt;Tidy data&lt;/a&gt; 的文章，而本文中也會以此文章中的例子為主。&lt;/p&gt;
+
+&lt;h2 id=&quot;tidy-data-的定義&quot;&gt;Tidy Data 的定義&lt;/h2&gt;
+
+&lt;p&gt;首先，一個資料集 (dataset) 是由許多觀測值 (value) 組成，而觀測值會是數值(為 quantitative，如身高、體重)或字串(為 qualitative，如性別、年份等)其中一種。而每一個觀測值是屬於某一變數 (variable) 與某一觀測樣本 (observation)。 變數代表資料所衡量與記錄的屬性，觀測樣表示背衡量的人事物。例如 A 的體重為 60 kg，則 變數為體重，觀測樣本為 A，觀測值則為 60。&lt;/p&gt;
+
+&lt;p&gt;有了變數與觀測樣本的概念後，在 Hadley 的文章中，定義 Tidy Data 如下。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;一個變數就是一行 (Each variable forms a column)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;一個觀測樣本就是一列 (Each observation forms a row)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;每一觀測單位是一張資料表 (Each type of observational unit forms a table)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;首先說明前面兩點，舉例來說， Hadley 文章的表 4 ，其變數有 religion、income 與 frequency。然而，各行標記的是 income 的觀測值 (income 的 value 彙整的級距)，因此並非 Tidy Data。由此例可知，此種觀測值標記在行的非 Tidy Data，較像寬格式的資料，因為欄位數可能會因資料增加而變動。而表 6 為表 4 的 Tidy Data，可看出 Tidy Data 較像長格式的資料。&lt;/p&gt;
+
+&lt;p&gt;表 7 也是一個觀測值標記在行的例子。而經過整理的表 8，將 Week 變成一行變數，再存放觀測值。然而表 8 仍非 Tidy Data，因為違反定義第三點。第三點說的是每一個觀測單位形成一張資料表，以表 8 來說，觀測單位包含歌曲基本資料 (song) 與每週排行 (rank)。因此，表中歌曲的基本資料會一直重複出現。而若要符合 Tidy Data，應該將此表拆成兩份，觀測單位一份以歌曲基本資料，一份以每週排行，其結果如表 13。而也有另一種情況是一個觀測單位分散在許多表，此時就要透過列或欄的方式合併各表，語法範例可見&lt;a href=&quot;/2016/09/28/dplyr-and-excel_2&quot;&gt;從 Excel 學習 R 的 dplyr (二)&lt;/a&gt; 的合併資料部份。&lt;/p&gt;
+
+&lt;p&gt;此外，當 value 存放兩個變數時，也非 Tidy Data。例如表 10(a) 的 column 變數，其 觀測值存放性別跟年齡級距兩個變數。因此需要再分成兩行，結果如表 10(b)。&lt;/p&gt;
+
+&lt;p&gt;將資料整理成 Tidy Data 可有助於資料分析。例如，若是資料的觀測值存放兩個變數的值，若只要分析其中一個變數，必要將其分為兩行變數才能進行分析。所以，基本上將資料先整理為 Tidy Data 會讓資料分析過程更加順利。&lt;/p&gt;
+
+&lt;p&gt;然而，Tidy Data 亦不一定能完全符合繪圖目的。舉例來說，表 12(b) 是 Tidy Data，但若想透過 R 的 ggplot2 繪製 tmax 與 tmin 兩條趨勢線於同一張圖，表 12(a) 反而是較容易的，範例如下。因此，整理資料的過程中，謹記資料格式的呈現要能快速準確地反映繪圖與分析目的，不必執著於一定要是 Tidy Data。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;library(ggplot2)
+
+ggplot(data_12a, aes(x = date, y = value, colour = element)) +
+	geom_line()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;總結&quot;&gt;總結&lt;/h2&gt;
+
+&lt;p&gt;Tidy Data 的目的主要是有助於資料分析。然而並不代表其一定能符合分析過程中每個目的。例如在表格呈現，寬格式的資料會容易判讀(試比較文章中的表 4 跟表 6)。因此，資料整理過程中，最重要的是要問目的為何，以及手上有的工具要搭配何種資料格式能快速達到目的。&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 10 Oct 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/10/10/tidy-data.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/10/10/tidy-data.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>如何在 ggplot2 裡依組別畫圖</title>
+        <description>&lt;p&gt;進行資料視覺化時，時常需要將資料依變數分組繪製圖形。透過 R 的繪圖套件 ggplot2 ，我們可以設定參數很快地完成這個目的。然而，當資料集的分組變數分散在各行時，ggplot2 無法直接繪製分組圖形。因此，在本文中會說明如何以 tidyr 套件的 &lt;code class=&quot;highlighter-rouge&quot;&gt;gather()&lt;/code&gt; 函數，將資料整理成 ggplot2 可使用的格式，以進行分組繪圖。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;在-ggplot2-依變數分組繪製圖形&quot;&gt;在 ggplot2 依變數分組繪製圖形&lt;/h2&gt;
+
+&lt;p&gt;在本節中，會使用 R 預設的 &lt;a href=&quot;https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html&quot;&gt;mtcars 資料集&lt;/a&gt;()。假設我們將繪製在 mtcars 中，以 vs 變數 (0, 1) 分組出在不同 cyl (4, 6, 8) 下的資料筆數。首先，第一種方法是我們可以以顏色標明分組，範例如下。由範例可看出，我們可透過設定 fill 參數來決定填滿長條圖內的顏色。另外 &lt;code class=&quot;highlighter-rouge&quot;&gt;factor()&lt;/code&gt;函數是使變數變成因子型態，而非原本預設的整數型態。另外 &lt;code class=&quot;highlighter-rouge&quot;&gt;geom_bar()&lt;/code&gt; 內的 &lt;code class=&quot;highlighter-rouge&quot;&gt;position = &quot;dodge&quot;&lt;/code&gt; 使長條圖非預設疊加呈現。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;library(ggplot2)
+
+mtcars %&amp;gt;% 
+    ggplot(aes(x = factor(cyl), fill = factor(vs))) +
+        geom_bar(position = &quot;dodge&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/AT5qoN7.png&quot; width=&quot;520&quot; height=&quot;280&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;而第二種方法，是可以透過 facet 進行分組，範例如下。由範例可看出，我們可透過加 &lt;code class=&quot;highlighter-rouge&quot;&gt;facet_grid()&lt;/code&gt;，並搭配 &lt;code class=&quot;highlighter-rouge&quot;&gt;~ factor(vs)&lt;/code&gt; 完成繪圖。另 &lt;code class=&quot;highlighter-rouge&quot;&gt;~&lt;/code&gt; 在 R 中表示的意思是函數關係，&lt;code class=&quot;highlighter-rouge&quot;&gt;~&lt;/code&gt; 左邊的變數會依賴 (depend on) 右邊的變數。如 &lt;code class=&quot;highlighter-rouge&quot;&gt;y ~ x1 + x2&lt;/code&gt; 表示變數 y 依賴於變數 x1 與 x2。以下方的範例來說，可解釋為進行 facet 分組時，是依賴於 &lt;code class=&quot;highlighter-rouge&quot;&gt;factor(vs)&lt;/code&gt; 進行分組。&lt;code class=&quot;highlighter-rouge&quot;&gt;~&lt;/code&gt; 在建立迴歸模型時更加常用。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mtcars %&amp;gt;% 
+    ggplot(aes(x = factor(cyl))) +
+        geom_bar() +
+        facet_grid(~ factor(vs))
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/Ct5Y5Wd.png&quot; width=&quot;520&quot; height=&quot;280&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;除以上兩種方法外，若在繪製散佈圖時，可用點圖形與大小以分組，範例可見&lt;a href=&quot;http://docs.ggplot2.org/current/geom_point.html&quot;&gt;文件&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;欄位轉換成資料再進行分組繪圖&quot;&gt;欄位轉換成資料，再進行分組繪圖&lt;/h2&gt;
+
+&lt;p&gt;雖然已講述了兩種方法進行分組繪圖，但若以&lt;a href=&quot;http:/goo.gl/2XzN9o&quot;&gt;中國信託歷史匯率&lt;/a&gt;資料為例，由下表可看出雖資料乍看下是屬於長格式(每日資料會向下成長)，但若想繪製如其網頁的兩種類型匯率走勢圖，資料無法以 ggplot2 分組繪製，因為一次僅能畫一個欄位的資料(y 只能一次放 Buy 或 Sell)，範例如下。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/LwqDCCZ.png&quot; width=&quot;520&quot; height=&quot;200&quot; /&gt;&lt;/center&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/cTGBdPX.png&quot; width=&quot;520&quot; height=&quot;200&quot; /&gt;&lt;/center&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;library(ggplot2)
+
+d &amp;lt;- read.csv(&quot;path/to/your/data/rate.csv&quot;, stringsAsFactors = FALSE)
+
+# y 只能放一個變數
+ggplot(d, aes(x = as.Date(Date), y = Buy)) +
+    geom_line() +
+    labs(x = &quot;Date&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/MxRGV2y.png&quot; width=&quot;520&quot; height=&quot;280&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;為解決這樣的問題，需要將資料集的 Buy 與 Sell 欄位彙整一個新的欄位，才可以將此新欄位如第一節所說，以 ggplot2 設定分組欄位。其轉換模式如同轉換資料寬格式到長格式。tidyr 的 &lt;code class=&quot;highlighter-rouge&quot;&gt;gather()&lt;/code&gt; 可達成此目的，範例如下。透過 &lt;code class=&quot;highlighter-rouge&quot;&gt;gather()&lt;/code&gt;，我們將 Buy 跟 Sell 兩個變數彙總成 Type 變數，並把數值命名為 Rate 變數。接著以 ggplot2 進行繪圖。注意線圖(趨勢圖)顏色分組的參數是 &lt;code class=&quot;highlighter-rouge&quot;&gt;colour&lt;/code&gt;，而非 &lt;code class=&quot;highlighter-rouge&quot;&gt;fill&lt;/code&gt;，因為線圖並非如長條圖是以顏色填滿。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;library(ggplot2)
+library(tidyr)
+
+# convert d from wide format to long format
+d_long &amp;lt;- d %&amp;gt;% 
+    gather(Type, Rate, -Date) 
+ 
+# draw
+ggplot(d_long, aes(x = as.Date(Date), y = Rate, colour = Type)) +
+    geom_line() +
+    labs(x = &quot;Date&quot;, y = &quot;Rate&quot;, title = &quot;Trend of Exchange Rate&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/oki92en.png&quot; width=&quot;520&quot; height=&quot;280&quot; /&gt;&lt;/center&gt;
+
+&lt;h2 id=&quot;總結&quot;&gt;總結&lt;/h2&gt;
+
+&lt;p&gt;本文首先說明 ggplot2 如何繪製分組資料，接著說明當遇到資料的分組變數是分散在各行時，如何透過 gather() 函數將其轉換成列資料，以繪製分組資料。本文範例程式碼可見&lt;a href=&quot;https://rawgit.com/ConnerChang/blog_examples/master/group_data_in_ggplot2.html&quot;&gt;此處&lt;/a&gt;。&lt;/p&gt;
+</description>
+        <pubDate>Sat, 08 Oct 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/10/08/group-data_in_ggplot2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/10/08/group-data_in_ggplot2.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>從 Excel 學習 R 的 dplyr (二)</title>
+        <description>&lt;p&gt;延續前篇如何從 Excel 學習 R 的 dplyr 以整理資料，本篇說明其他 dplyr 的資料整理函數。相較於前篇說明如何進行資料彙整分析，本篇著重在如何整理原始資料，如何產生新欄位、篩選原始資料、選取欄位、合併資料。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;(本篇文章使用的範例資料在 R 的 ggplot2 套件下的 mpg 資料集。細部資料描述可見&lt;a href=&quot;http://docs.ggplot2.org/current/mpg.html&quot;&gt;連結&lt;/a&gt;)。&lt;/p&gt;
+
+&lt;h2 id=&quot;產生新欄位&quot;&gt;產生新欄位&lt;/h2&gt;
+
+&lt;p&gt;在範例資料中，假設我們想計算 hwy 欄位減 cty 欄位的值，並取絕對值，在 Excel 中，我們可以先命名欄位名稱，再以 I 行的值減 H 行的值，再搭配 &lt;code class=&quot;highlighter-rouge&quot;&gt;abs()&lt;/code&gt;。而在 R 中，可以新增欄位的函數為 &lt;code class=&quot;highlighter-rouge&quot;&gt;mutate()&lt;/code&gt;。範例如下。由範例可看出，產生新欄位的過程類似 Excel，我們先命名新欄位名稱，接著，再相減我們兩個原本舊有的欄位並取絕對值。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;library(dplyr)
+
+mpg %&amp;gt;% 
+	mutate(h_minus_c = abs(hwy - cty))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;此外，mutate() 產生的新欄位可以搭配 R 其他的函數。例如我們想取出 trans 欄位的後三碼，範例如下。由範例可看出，我們可以命名新欄位 tran_last，接著透過 &lt;code class=&quot;highlighter-rouge&quot;&gt;substr()&lt;/code&gt;，其使用方法同 Excel 的 MID()，取出 trans 欄位的後三碼。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mpg %&amp;gt;% 
+    mutate(tran_last = substr(trans, nchar(trans) - 3, nchar(trans)))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;最後，&lt;code class=&quot;highlighter-rouge&quot;&gt;mutate()&lt;/code&gt;其實不只可以產生新欄位，此函數亦可以更換取代原始欄位內的值。例如，我們想將 fl 欄位內值的 p 變更為大寫 P。範例如下。透過 dplyr 內的 &lt;code class=&quot;highlighter-rouge&quot;&gt;if_else()&lt;/code&gt; 函數，若是 fl 內的值為 p，則取代為 P，否則維持原始值。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mpg %&amp;gt;% 
+    mutate(fl = if_else(fl == &quot;p&quot;, &quot;P&quot;, fl))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;if_else&lt;/code&gt; 以取代值的方式亦可改由 dplyr 的 &lt;code class=&quot;highlighter-rouge&quot;&gt;recode()&lt;/code&gt; 達成。範例如下。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mpg %&amp;gt;% 
+    mutate(fl = recode(fl, &quot;p&quot; = &quot;P&quot;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;篩選原始資料&quot;&gt;篩選原始資料&lt;/h2&gt;
+
+&lt;p&gt;在 Excel 要篩選原始資料，可以使用「篩選」功能。在 R 的 dplyr 中，篩選資料可用已前篇介紹的 &lt;code class=&quot;highlighter-rouge&quot;&gt;filter()&lt;/code&gt;。例如，我們要篩選 displ 欄位大於 3 的資料，範例如下。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mpg %&amp;gt;% 
+    filter(displ &amp;gt; 3)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;此外，&lt;code class=&quot;highlighter-rouge&quot;&gt;filter()&lt;/code&gt; 內的條件可用 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;&lt;/code&gt; 達成「且」，用 &lt;code class=&quot;highlighter-rouge&quot;&gt;|&lt;/code&gt; (位於 Enter 鍵上方)達成「或」的條件式。例如，我們要篩選 displ 欄位大於 3 的資料「而且」manufacturer 為 audi，範例如下。另外，若省去 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;&lt;/code&gt;，而以 &lt;code class=&quot;highlighter-rouge&quot;&gt;,&lt;/code&gt; 代替，亦表示 「且」&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mpg %&amp;gt;% 
+    filter(displ &amp;gt; 3 &amp;amp; manufacturer == &quot;audi&quot;)
+
+mpg %&amp;gt;% 
+    filter(displ &amp;gt; 3, manufacturer == &quot;audi&quot;)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;又或者例如，我們要篩選 manufacturer 是 toyota 下，「且」displ 大於 3 「或」小於 2 的資料，範例如下。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mpg %&amp;gt;% 
+    dplyr::filter(manufacturer == &quot;toyota&quot; &amp;amp; (displ &amp;gt; 3 | displ &amp;lt; 2))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;選取欄位&quot;&gt;選取欄位&lt;/h2&gt;
+
+&lt;p&gt;相較於前段所說的篩選資料，是針對每列進行篩選，此段會說明如何針對每行進行篩選。例如，在 Excel 中，我們可能會拿到有 100 個欄位，但其實只有 10 個欄位有用，我們會手動刪去不需要的欄位。而在 R 的 dplyr 套件裡，選取欄位是使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;select()&lt;/code&gt;。例如，我們要選出範例資料集的 model 跟 year，範例如下。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mpg %&amp;gt;% 
+    select(model, year)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;有時候，我們不需要的欄位只佔少數，例如我們只不要 model 欄位，我們可以在變數名稱加 &lt;code class=&quot;highlighter-rouge&quot;&gt;-&lt;/code&gt;以捨去欄位，範例如下。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mpg %&amp;gt;% 
+    select(-model)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;此外，有時候資料集的欄位會有相似性，例如皆是以 year 開頭，後面接年份，而要一次選出這些欄位，可以用 &lt;code class=&quot;highlighter-rouge&quot;&gt;select(start_with(&quot;year&quot;))&lt;/code&gt; 選出。而以下的範例展示如何選出 mpg 資料集中以 m 開頭的欄位。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mpg %&amp;gt;% 
+    select(starts_with(&quot;m&quot;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;最後，&lt;code class=&quot;highlighter-rouge&quot;&gt;select()&lt;/code&gt; 也可以用欄位序列值進行選取。例如我們要選取 mpg 第一到第三與第六行，可以用下面的範例做到。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mpg %&amp;gt;% 
+    select(1:3, 6)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;合併資料&quot;&gt;合併資料&lt;/h2&gt;
+
+&lt;p&gt;合併資料的意思指的是合併多個資料集，而合併資料可以分為列資料 (row) 與行欄位 (column) 兩個方向。我們首先講列資料的合併。例如，我們有兩個資料集如下。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;d1 &amp;lt;- data.frame(a = 1:3, b = 3:5, c = 5:7)
+d2 &amp;lt;- data.frame(b = 1:2, c = 2:3, a = 5:6)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如果我們要將 d2 合併在 d1 資料集下方，可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;rbind()&lt;/code&gt; 函數，r 表示 row。此外，此函數可以確保兩資料集要有相同欄位名稱才會合併。例如以 d1 與 d2 合併，a 欄位的資料會是 1, 2, 3, 5, 6，而不會是合併到 d2 的第一個欄位 1 與 2。範例如下。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbind(d1, d2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;行資料的合併部分，是使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;cbind()&lt;/code&gt; 函數，c 表示 column。但 cbind() 並不會確保合併的資料是相同一筆，例如以下的資料集，可看出 cbind() 並不會確保 id 相同的合併後會是同一列。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;d1 &amp;lt;- data.frame(id = paste0(&quot;id&quot;, 1:3), a = 3:5, b = 5:7)
+d2 &amp;lt;- data.frame(id = paste0(&quot;id&quot;, 3:1), c = 2:4, d = 5:7)
+cbind(d1, d2)
+
+
+   id a b  id c d
+1 id1 3 5 id3 2 5
+2 id2 4 6 id2 3 6
+3 id3 5 7 id1 4 7
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;要解決這個問題，需透過 &lt;code class=&quot;highlighter-rouge&quot;&gt;join()&lt;/code&gt; 系列函數達成。首先介紹 &lt;code class=&quot;highlighter-rouge&quot;&gt;inner_join()&lt;/code&gt;，範例如下。透過 by = “id”，就可以確保相同 id 的資料才進行行欄位合併。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;inner_join(d1, d2, by = &quot;id&quot;)
+
+   id a b c d
+1 id1 3 5 4 7
+2 id2 4 6 3 6
+3 id3 5 7 2 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;此外，&lt;code class=&quot;highlighter-rouge&quot;&gt;inner_join()&lt;/code&gt; 會確保兩個合併的資料集合併的參考行 (如上述的 id) 都有的值才會回傳。例如以下面的資料集，d2 的 id 只有 id1 與 id2，只會有兩個資料集都有的 id1，id2 合併的資料才會回傳。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;d1 &amp;lt;- data.frame(id = paste0(&quot;id&quot;, 1:3), a = 3:5, b = 5:7)
+d2 &amp;lt;- data.frame(id = paste0(&quot;id&quot;, 2:1), c = 2:3, d = 5:6)
+inner_join(d1, d2, by = &quot;id&quot;)
+
+   id a b c d
+1 id1 3 5 3 6
+2 id2 4 6 2 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;另外若要回傳資料要保留 d1 所有的 id (如同 Excel 內的 vlookup())， d2 沒有的 id 就以 NA 表示，則可以用 &lt;code class=&quot;highlighter-rouge&quot;&gt;left_join()&lt;/code&gt;。範例如下。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;left_join(d1, d2, by = &quot;id&quot;)
+
+   id a b  c  d
+1 id1 3 5  3  6
+2 id2 4 6  2  5
+3 id3 5 7 NA NA
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;總結&quot;&gt;總結&lt;/h2&gt;
+
+&lt;p&gt;本篇文章介紹函數可整理如下。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;產生新欄位: &lt;code class=&quot;highlighter-rouge&quot;&gt;mutate()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;篩選列資料: &lt;code class=&quot;highlighter-rouge&quot;&gt;filter()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;篩選行欄位: &lt;code class=&quot;highlighter-rouge&quot;&gt;select()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;以列合併資料: &lt;code class=&quot;highlighter-rouge&quot;&gt;rbind()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;以行合併資料: &lt;code class=&quot;highlighter-rouge&quot;&gt;inner_join()&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;left_join()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 28 Sep 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/09/28/dplyr-and-excel_2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/09/28/dplyr-and-excel_2.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Berkerley CS105x Introduction to Apache Spark 筆記(二)</title>
+        <description>&lt;p&gt;本系列紀錄 &lt;a href=&quot;https://www.edx.org/xseries/data-science-engineering-apache-spark&quot;&gt;Data Science and Engineering with Apache Spark&lt;/a&gt; 的上課與作業筆記。本文為 Introduction to Apache Spark Week 2 的筆記。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;(本筆記圖片若無特別標注來源，皆來自上課講義。)&lt;/p&gt;
+
+&lt;p&gt;在 Week 1 的課程中有提到，Spark 是作為 &lt;strong&gt;Scalable, efficient analysis of Big Data&lt;/strong&gt; 的工具，而在前週已有說明如何透過 Spark DataFrame 進行分析。而 Week 2 首先說明 Spark 在 scalable 與 efficient 兩個面向。&lt;/p&gt;
+
+&lt;h2 id=&quot;map-reduce&quot;&gt;Map Reduce&lt;/h2&gt;
+
+&lt;p&gt;在 scalable 面向，因現今硬體設備已經相當便宜，因此在大資料時代下，運算架構多是採叢集式運算。叢集式運算的一個重要問題是如何將運算作業拆分至各台機器平行計算。以字數計算 (Word Count) 為例，當我們拿到一份文本，而且想計算出現次數最高的詞，可將原文本拆成多份小文本，再分派到各台機器中，以 &lt;a href=&quot;https://en.wikipedia.org/wiki/Hash_table&quot;&gt;hash table&lt;/a&gt; 儲存每個字的出現次數，最後再將各機器的計算結果彙整到一台機器。&lt;/p&gt;
+
+&lt;p&gt;然而，若要能一次彙整最後計算結果，其機器需要有相當的運算能力。因此，可以在彙整階段分成多台機器平行彙整一部分計數，最後才彙整到一台機器回傳結果(借用 Divide and Conquer 的手法)。其概念圖如下。由圖可知，平行拆分計算階段為 Map，平行彙整計算階段為 Reduce。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://imgur.com/at8jVoE.png&quot; width=&quot;350&quot; height=&quot;200&quot; /&gt;&lt;/center&gt;
+
+&lt;h2 id=&quot;in-memory-computing&quot;&gt;In-memory Computing&lt;/h2&gt;
+
+&lt;p&gt;在 efficient 面向，傳統 Hadoop 平台的計算架構也是採用 Map Reduce。然而，其資料在各機器迭代計算是透過硬碟交換，因此需要許多 Disk I/O 作業，導致計算效率低落。而 Spark 的設計理念是希望盡量做到在記憶體運算 (In-memory Computing)，因此資料不需再寫回硬碟，計算速度通常可比 Hadoop 快上 10 倍至 100 倍。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/aqARVBs.png&quot; width=&quot;360&quot; height=&quot;250&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;Hadoop 與 Spark 比較可見下圖。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/lsSo29u.png&quot; width=&quot;360&quot; height=&quot;250&quot; /&gt;&lt;/center&gt;
+
+&lt;h2 id=&quot;lab-exercises&quot;&gt;Lab Exercises&lt;/h2&gt;
+
+&lt;p&gt;Lab 1A 主要介紹 &lt;a href=&quot;http://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark-sql-module&quot;&gt;PySpark SQL API&lt;/a&gt;與練習常見的 &lt;strong&gt;Transformation&lt;/strong&gt; 與 &lt;strong&gt;Action&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;Lab 1B 是字詞次數計算的練習，兩個做題要點如下。首先，若要針對 Spark DateFrame 進行欄位的計算，是使用 df.select(func(df.column).alias(“new column name”)) 的形式。例如，(1b) 要將某欄位(值皆為字串)都加上 “s”，其語法如下。其中 &lt;code class=&quot;highlighter-rouge&quot;&gt;lit()&lt;/code&gt; 是產生一整行的 s。&lt;code class=&quot;highlighter-rouge&quot;&gt;concat()&lt;/code&gt; 是合併字串。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from pyspark.sql.functions import lit, concat
+
+pluralDF = wordsDF.select(concat(wordsDF.word, lit(&quot;s&quot;)).alias(&quot;word&quot;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;第二， Spark DateFrame 依某欄位分組彙整計算統計量是使用 df.groupBy(“column name”).func()，其中 func() 是如 &lt;code class=&quot;highlighter-rouge&quot;&gt;mean()&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;count()&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;sum()&lt;/code&gt; 等函數。&lt;/p&gt;
+</description>
+        <pubDate>Wed, 17 Aug 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/08/17/CS105x-Introduction-to-Apache-Spark-%E7%AD%86%E8%A8%98(%E4%BA%8C).html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/08/17/CS105x-Introduction-to-Apache-Spark-%E7%AD%86%E8%A8%98(%E4%BA%8C).html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>從 Excel 學習 R 的 dplyr</title>
+        <description>&lt;p&gt;對於經常使用 Excel 用戶而言，樞紐分析表是做資料初步整理分析的常用工具，例如計算資料筆數、變數平均等。這篇文章會說明如何透過樞紐分析表來學習 R language 的 dplyr 套件，以幫助 Excel 用戶學習以 R 整理資料。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;(本篇文章使用的範例資料為 &lt;a href=&quot;https://www.kaggle.com/c/titanic/data&quot;&gt;Titanic: Machine Learning from Disaster&lt;/a&gt;, 細部資料描述可見連結。)&lt;/p&gt;
+
+&lt;p&gt;一個樞紐分析表建立時，需要設定四個區塊，如下圖所示。分別是報表篩選、欄標籤、列標籤、個值。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/lARgw4G.png&quot; width=&quot;280&quot; height=&quot;250&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;舉例來說，如果了解依 Sex 跟 Pclass 分類的的存活人數。其樞紐分析表如下圖。設定方式是將 Sex、Pclass 放到列標籤，將 Suvival 放到個值，並設定加總。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/rNGcm7K.png&quot; width=&quot;300&quot; height=&quot;250&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;在 R 的 &lt;a href=&quot;https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html&quot;&gt;dplyr&lt;/a&gt; 中，樞紐分析表的列標籤對應到 &lt;code class=&quot;highlighter-rouge&quot;&gt;group_by()&lt;/code&gt;，個值對應到 &lt;code class=&quot;highlighter-rouge&quot;&gt;summarise()&lt;/code&gt;。因此，要產生跟上面樞紐分析表的 R 語法如下。其中 &lt;code class=&quot;highlighter-rouge&quot;&gt;%&amp;gt;%&lt;/code&gt; 是 pipe 運算子，其運作方式可見&lt;a href=&quot;https://www.r-bloggers.com/magrittr-simplifying-r-code-with-pipes/&quot;&gt;此處&lt;/a&gt;。因此，從下面的語法可看出只要將 Sex, Pclass 放到 &lt;code class=&quot;highlighter-rouge&quot;&gt;group_by()&lt;/code&gt; 中，另再將 Survived 放到 &lt;code class=&quot;highlighter-rouge&quot;&gt;summarise()&lt;/code&gt; 並作 &lt;code class=&quot;highlighter-rouge&quot;&gt;sum()&lt;/code&gt; 加總。以上的語法對應到樞紐分析表將 Sex、Pclass 放到列標籤，將 Suvival 放到個值，並設定加總。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;library(dplyr)
+
+titanic %&amp;gt;% 
+	group_by(Sex, Pclass) %&amp;gt;%
+	summarise(sum(Survived))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/jF6gtlx.png&quot; width=&quot;300&quot; height=&quot;250&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;另外，在樞紐分析表重要的個值摘要方式與 &lt;code class=&quot;highlighter-rouge&quot;&gt;summarize()&lt;/code&gt; 的變數匯總方式對應可整理如下表：&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;個值摘要方式&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;summarise()&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;加總&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sum()&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;計數&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;n()&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;平均值&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;mean()&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;最大值&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;max()&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;最小值&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;min()&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;標準差&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sd()&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;雖然樞紐分析表的欄標籤並沒有對應的 dplyr 語法，然而可以透過&lt;a href=&quot;/2016/08/12/long-wide-format/&quot;&gt;你的資料是寬的還是長的&lt;/a&gt;介紹的 &lt;code class=&quot;highlighter-rouge&quot;&gt;tidyr::spread()&lt;/code&gt; 建立欄標籤。舉例來說，我們在前面的樞紐分析表加入 Embarked 變數到欄標籤，結果如下圖。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/1TJc3Qj.png&quot; width=&quot;300&quot; height=&quot;280&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;在 R 中要產生上面的樞紐分析表，其語法如下。可看到我們先在 &lt;code class=&quot;highlighter-rouge&quot;&gt;group_by()&lt;/code&gt; 加入 Embarked 變數，做完 &lt;code class=&quot;highlighter-rouge&quot;&gt;summarise()&lt;/code&gt; 後，設定 &lt;code class=&quot;highlighter-rouge&quot;&gt;spread()&lt;/code&gt; 的 key 為 Embarked 即可完成。但此方法只能產生一層的欄標籤，無法做到兩層以上的欄標籤。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;library(dplyr)
+library(tidyr)
+
+titanic %&amp;gt;% 
+	group_by(Sex, Pclass, Embarked) %&amp;gt;% 
+	summarise(s = sum(Survived)) %&amp;gt;% 
+	spread(key = Embarked, value = s)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/STeV9NR.png&quot; width=&quot;400&quot; height=&quot;280&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;樞紐分析表的報表篩選對應的 dplyr 的語法是 &lt;code class=&quot;highlighter-rouge&quot;&gt;filter()&lt;/code&gt;。若想要產生依 Sex 與 Pclass 分類，且限定 Embarked 在 C 與 Q 兩個地點的平均 Fare， 其樞紐分析表的設定如下圖。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/jG02WHr.png&quot; width=&quot;400&quot; height=&quot;280&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;在 R 中要產生上面的樞紐分析表，其語法如下。可看到 &lt;code class=&quot;highlighter-rouge&quot;&gt;dplyr::filter(Embarked %in% c(&quot;C&quot;, &quot;Q&quot;))&lt;/code&gt; 這段語法，&lt;code class=&quot;highlighter-rouge&quot;&gt;%in%&lt;/code&gt; 運算子計算資料有無相符 (Match)，更多的解釋可見&lt;a href=&quot;https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html&quot;&gt;文件&lt;/a&gt;。因 &lt;code class=&quot;highlighter-rouge&quot;&gt;filter()&lt;/code&gt; 為回傳有符合條件的資料，故回傳 Embarked 是 C 和 Q 的資料。此外，&lt;code class=&quot;highlighter-rouge&quot;&gt;dplyr::filter()&lt;/code&gt; 是呼叫在 dplyr 套件內的 filter()。因為在 R 中的原生套件 stat 中也有 filter()，而兩者使用場景且結果不同。因此若有時候發現 &lt;code class=&quot;highlighter-rouge&quot;&gt;filter()&lt;/code&gt; 的結果與預期不合，可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dplyr::filter()&lt;/code&gt; 指定。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;titanic %&amp;gt;% 
+    dplyr::filter(Embarked %in% c(&quot;C&quot;, &quot;Q&quot;)) %&amp;gt;%
+    group_by(Sex, Pclass) %&amp;gt;%
+    summarize(mean(Fare))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/VSckNbW.png&quot; width=&quot;400&quot; height=&quot;280&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;此外，&lt;code class=&quot;highlighter-rouge&quot;&gt;filter()&lt;/code&gt; 也能作為列標籤或欄標籤的篩選。如下面的樞紐分析表，我們僅篩選 Pclass 是 2 跟 3。在 R 中可以透過下面的語法完成。可看到 &lt;code class=&quot;highlighter-rouge&quot;&gt;filter()&lt;/code&gt; 當中設定 &lt;code class=&quot;highlighter-rouge&quot;&gt;Pclass != 1&lt;/code&gt;。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/GbFxnox.png&quot; width=&quot;400&quot; height=&quot;280&quot; /&gt;&lt;/center&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-{r}&quot;&gt;titanic %&amp;gt;% 
+    group_by(Sex, Pclass) %&amp;gt;%
+    summarize(mean(Fare)) %&amp;gt;%
+    dplyr::filter(Pclass != 1) // also can be done by setting Pclass %in% c(&quot;2&quot;, &quot;3&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/EpZxcLi.png&quot; width=&quot;350&quot; height=&quot;250&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;必須注意一點 R 進行 &lt;code class=&quot;highlighter-rouge&quot;&gt;summarize()&lt;/code&gt; 運算後，原本資料集的變數就會只剩有在 &lt;code class=&quot;highlighter-rouge&quot;&gt;group_by()&lt;/code&gt; 內的變數。因此，若想要做樞紐分析表的報表篩選，務必將 &lt;code class=&quot;highlighter-rouge&quot;&gt;filter()&lt;/code&gt; 放在 &lt;code class=&quot;highlighter-rouge&quot;&gt;summarize()&lt;/code&gt; 之前。舉例來說，如下面的 R 語法就會回報錯誤，因為 Embarked 變數已不在 &lt;code class=&quot;highlighter-rouge&quot;&gt;summarize()&lt;/code&gt; 後的資料集中。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;titanic %&amp;gt;% 
+    group_by(Sex, Pclass) %&amp;gt;%
+    summarize(mean(Fare)) %&amp;gt;%
+    dplyr::filter(Embarked %in% c(&quot;C&quot;, &quot;Q&quot;))
+# Error: object 'Embarked' not found
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;總言之，樞紐分析表的四個設定區塊對應到 dplyr 的語法整理如下：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;報表篩選：&lt;code class=&quot;highlighter-rouge&quot;&gt;filter()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;欄標籤：&lt;code class=&quot;highlighter-rouge&quot;&gt;group_by()&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;tidyr::spread()&lt;/code&gt; (僅能產生一層欄標籤)&lt;/li&gt;
+  &lt;li&gt;列標籤：&lt;code class=&quot;highlighter-rouge&quot;&gt;group_by()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;個值：&lt;code class=&quot;highlighter-rouge&quot;&gt;summarise()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;最後，在 R 中可以透過 rpivotTable 建立互動式樞紐分析表，可再嵌入 R markdown 中做成報告，可參考&lt;a href=&quot;https://rawgit.com/ConnerChang/blog_examples/master/dplyr_excel.html&quot;&gt;此處&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;補充文件&quot;&gt;補充文件&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf&quot;&gt;dplyr cheatsheet&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 13 Aug 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/08/13/dplyr-and-excel.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/08/13/dplyr-and-excel.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>你的資料是寬的還是長的？</title>
+        <description>&lt;p&gt;這篇文章說明寬格式 (Wide Format) 與長格式 (Long Format) 兩種資料格式。並說明在特定情境下寬格式的缺點，並如何透過 R 套件 tidyr 的語法快速互相轉換寬格式與長格式資料。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;在資料呈現中，可分為寬格式與長格式。這兩種格式差異在於增加新資料時，資料集的欄位(或者變數)是否會增加。細部來說，寬格式的資料可能會隨資料增加而新增欄位，而長格式的欄位個數是固定的。舉例來說，下面的資料呈現的是 A, B, C 三種產品在每天生產量與銷售量。從表可看出每天日期是作為欄位，可以想像的是，當需要紀錄 1/11 以後的資料，需要新增欄位。因此，以下的資料集是以寬格式呈現。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/pHoSlFM.png&quot; width=&quot;700&quot; height=&quot;200&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;另一方面，下面的資料是以日期作為單一欄位。當有新日期的資料，會增加的是列數而非欄位個數，也就是說，欄位個數並不隨資料增加而增加。因此，以下的資料集是以長格式呈現。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/WOirinQ.png&quot; width=&quot;280&quot; height=&quot;200&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;寬與長兩種格式各有其適用的場景。但在匯總統計量，如平均數或筆數時，寬格式會難以計算。舉例來說，對於使用 Excel 的人員來說，匯總計算通常是以樞紐分析表完成。若他們拿到的是寬格式，要計算每天的總生產量跟總銷售量會十分麻煩，必須手動新增每日日期欄位，如下圖。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/ZVcH9W9.png&quot; width=&quot;280&quot; height=&quot;200&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;但以長格式資料做成的樞紐分析表可快速篩選日期。如下圖所述。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;/images/20160812_long_pivot.png&quot; width=&quot;280&quot; height=&quot;200&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;由上可看出長格式在資料匯總的優勢。然而，我們無法要求資料一定要是長格式。更常發生的情境會是我們拿到寬格式的資料，再手動轉換成長格式。&lt;a href=&quot;http://www.listendata.com/2015/02/excel-formula-convert-data-from-wide-to.html&quot;&gt;此文&lt;/a&gt; 有說明如何以 Excel 進行轉換。但是，若這件工作是每日例行作業就會十分擾人。當然，Excel 可以透過 VBA 完成自動化流程，但撰寫程式碼的過程也會十分冗長。但如果透過 R， 僅僅只要一行語法就可以快速轉換兩種格式。&lt;/p&gt;
+
+&lt;p&gt;在 R 中達成轉換的任務是使用 tidyr 套件的 &lt;code class=&quot;highlighter-rouge&quot;&gt;gather()&lt;/code&gt; 與 &lt;code class=&quot;highlighter-rouge&quot;&gt;spread()&lt;/code&gt;。&lt;code class=&quot;highlighter-rouge&quot;&gt;gather()&lt;/code&gt; 的關鍵是 key 和 value 的搭配與要轉換的欄位。以前面的寬資料來說，&lt;code class=&quot;highlighter-rouge&quot;&gt;gather()&lt;/code&gt; 語法如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gather(data, key = date, value = quantity, 3:12)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;語法分成四個部份，語法的第一個參數是要轉換的資料，第二個參數是合併成新的這一行的名稱，所以可以自己命名，以此例來說，要匯總各個日期欄位，因此命名為 date。第三個參數是值的名稱，所以也可以自己命名，故命名為 quantity。第三塊是告訴程式我們對哪幾個變數做合併的轉換
+。此例為第 3 行到第 12 行。透過上面的語法，可將寬格式轉換成長格式如下圖。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/VyLaNE6.png&quot; width=&quot;280&quot; height=&quot;200&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;反之，若要透過 R 將長格式轉成寬格式，需要透過 &lt;code class=&quot;highlighter-rouge&quot;&gt;spread()&lt;/code&gt;。以前例來說，&lt;code class=&quot;highlighter-rouge&quot;&gt;spread() &lt;/code&gt;語法如下。可看出 spread() 語法的參數跟 &lt;code class=&quot;highlighter-rouge&quot;&gt;gather()&lt;/code&gt; 相近，只是兩者作相反的轉換。更多的例子可參考&lt;a href=&quot;https://cran.r-project.org/web/packages/tidyr/tidyr.pdf&quot;&gt;說明文件&lt;/a&gt;。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spread(long_data, key = date, value = quantity)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;額外補充，若要透過 Python pandas 做到寬格式轉換成長格式，可透過 &lt;code class=&quot;highlighter-rouge&quot;&gt;melt()&lt;/code&gt;， 語法如下所示：&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/pf4wjvv.png&quot; width=&quot;400&quot; height=&quot;150&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;總言之，此篇文章說明寬與長兩種格式的資料，與寬格式在作資料匯總的劣勢。最後說明如何透過 R 套件語法快速轉換兩種格式。&lt;/p&gt;
+
+&lt;h3 id=&quot;補充文件&quot;&gt;補充文件&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.theanalysisfactor.com/wide-and-long-data/&quot;&gt;The Wide and Long Data Format for Repeated Measures Data&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://ramnathv.github.io/pycon2014-r/explore/tidy.html&quot;&gt;Tidy Data&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 12 Aug 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/08/12/long-wide-format.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/08/12/long-wide-format.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Berkerley CS105x Introduction to Apache Spark 筆記(一)</title>
+        <description>&lt;p&gt;本系列紀錄 &lt;a href=&quot;https://www.edx.org/xseries/data-science-engineering-apache-spark&quot;&gt;Data Science and Engineering with Apache Spark&lt;/a&gt; 的上課與作業筆記。本文為 Introduction to Apache Spark Week 1 的筆記。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;(本筆記圖片若無特別標注來源，皆來自上課講義。)&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-apache-spark&quot;&gt;What is Apache Spark?&lt;/h2&gt;
+
+&lt;p&gt;Week 1 的課程先闡述為何需要使用 Spark： 若資料量成長到無法使用在單機環境下的傳統資料分析工具，如 Unix shell commands (grep, awk, sed)、pandas、R，就會需要分散式的架構進行資料儲存與分析。Spark 主要就是提供 &lt;strong&gt;Scalable, efficient analysis of Big Data&lt;/strong&gt; 的工具，而在未來的課程中，會說明 Spark 是如何擁有這些特性。&lt;/p&gt;
+
+&lt;h2 id=&quot;the-structure-spectrum&quot;&gt;The Structure Spectrum&lt;/h2&gt;
+
+&lt;p&gt;在進入 Spark 的分析架構前，課程先說明在資料管理上的概念：schema，課程定義如下:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;A schema is a description of a particular collection of data, using a given data model.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;白話來說，schema 可以看作是對於資料集的描述，例如定義資料表名稱、每筆資料的欄位名稱與屬性等。而透過 schema，我們可將資料分成 Structured, Semi-structured 與 Unstructured 三種型態，其分類表如下圖。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/rhizRxA.png&quot; width=&quot;400&quot; height=&quot;200&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;簡言之，Structured data 在資料產生前就會定義出 schema， 規定資料集中的每筆資料該有哪些欄位。而 Semi-structured 則是在資料產生過程中沒有固定的 schema，也就是每筆資料可能有不同的欄位。而 Unstructured data 並不會特別定義任何出 schema。 這三種資料形態的差異，更多解釋與例子可見&lt;a href=&quot;https://kevinwang.gitbooks.io/bigdata/content/general/structured-data.html&quot;&gt;此處&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;analysis-and-apache-spark&quot;&gt;Analysis and Apache Spark&lt;/h2&gt;
+
+&lt;p&gt;在本次課程中，是透過 &lt;a href=&quot;http://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.DataFrame&quot;&gt;DataFrame&lt;/a&gt; 進行資料分析，也就是 R 與 Python pandas 的資料分析格式，而不是透過 Resilient Distributed Dataset (RDD)。Spark DataFrame 的基本特性與 RDD 大致相同，都包含:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;建立後就不可改變(Immuntable)&lt;/li&gt;
+  &lt;li&gt;Track lineage information 的機制以計算遺失的資料&lt;/li&gt;
+  &lt;li&gt;可作分散式運算&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;此外，Spark DataFrame 的每一列都是 &lt;a href=&quot;http://spark.apache.org/docs/latest/api/python/pyspark.sql.html#pyspark.sql.Row&quot;&gt;Row&lt;/a&gt; 物件。而取得欄位值可透過以下的方式：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt;row = Row(name=&quot;Alice&quot;,+age=11)
+&amp;gt;&amp;gt;&amp;gt;row
+Row(age=11,+name='Alice')
+
+&amp;gt;&amp;gt;&amp;gt;row['name'], row['age']
+('Alice',+11)
+
+&amp;gt;&amp;gt;&amp;gt;row.name, row.age
+('Alice',+11)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;working-with-spark-dataframes&quot;&gt;Working with Spark DataFrames&lt;/h3&gt;
+
+&lt;p&gt;Spark DataFrame 可以透過 python pandas, R DataFrame 或者從其他儲存系統 (如HDFS) 內的文件產生，產生方式可參考&lt;a href=&quot;http://spark.apache.org/docs/latest/sql-programming-guide.html&quot;&gt;文件&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;在分析過程中會需要對 DataFrame 做各種操作，如篩選變數、產生新變數、計算變數平均等。Spark 的操作可分為 &lt;strong&gt;Transformation&lt;/strong&gt; 與 &lt;strong&gt;Action&lt;/strong&gt; 兩種。在這裡有一個非常重要的一個觀念，就是 Transformation 的操作是惰性求值 (lazy evaluation), 也就是進行 Transformation 操作並不會實際計算值，而是要到進行 Action 操作時，才會實際計算。這邊我可以舉我自己的例子，我曾經將一個約 7,000 萬筆的資料以 pyspark 的 api 匯入 Spark, 之後進行 &lt;code class=&quot;highlighter-rouge&quot;&gt;select()&lt;/code&gt; 與 &lt;code class=&quot;highlighter-rouge&quot;&gt;filter()&lt;/code&gt; 的操作 (皆為 Transformation 操作), 這邊的執行時間都是約 1 秒就執行完畢，但當我執行 &lt;code class=&quot;highlighter-rouge&quot;&gt;describe()&lt;/code&gt; 操作時 (Action 操作)，就執行約 20 分鐘左右。因此只有進行 Action 操作時， Spark 才會開始進行運算。&lt;/p&gt;
+
+&lt;p&gt;常見的 Spark DataFrame Transformation 操作包含欄位選取，篩選值與 GroudBy 等操作。如 &lt;code class=&quot;highlighter-rouge&quot;&gt;select()&lt;/code&gt;，是選取 DataFrame 的某些欄位，使用方法如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt;df.select('*') // 選取 df 所有欄位
+
+&amp;gt;&amp;gt;&amp;gt;df.select('name','age') // 選取 df 中的 name 跟 age 欄位
+
+&amp;gt;&amp;gt;&amp;gt;df.select(df.name, (df.age+10).alias('age')) // 選取 df 中的 name 並將 age 欄位的值加 10，並將新值的欄位名稱命名為 age 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;其他常見的 Transformation 操作可見下表：&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/Nv28SST.png&quot; width=&quot;400&quot; height=&quot;220&quot; /&gt;&lt;/center&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/pEEZawT.png&quot; width=&quot;400&quot; height=&quot;220&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;範例可見&lt;a href=&quot;http://spark.apache.org/docs/latest/api/python/pyspark.sql.html&quot;&gt;文件&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;Spark DataFrame 的 Action 操作包含印出資料、計算資料筆數與計算基本統計特徵量等。常見操作可見下表。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/5bTUZYf.png&quot; width=&quot;400&quot; height=&quot;220&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;在執行各種操作中，會有一些反覆使用到的 DataFrames，此時可將這些 DataFrames 快取到記憶體中，減少重複運算。語法如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df.cache() //將 df 快取到記憶體中
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;因此，透過上述的過程，匯入資料、進行 Transformation 與 Action 操作，並快取某些 DataFrames 到記憶體中，課程中整理出以 Spark DataFrame 進行分析的週期如下圖。&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;http://i.imgur.com/wmWKuLM.png&quot; width=&quot;400&quot; height=&quot;220&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;最後，Spark 執行運算時是採 Driver 和多個 Executors 的架構。Spark 運行程式是在 Driver 中，而 Transfomation 的操作是在 Executors 中執行，而 Action 是在 Driver 和 Executors 完成。而必須注意的是，通常在觀察資料時會使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;collect()&lt;/code&gt; 這個 Action 操作，但一旦執行後，會將所有分散在 Executors 的資料拉回到 Driver 中而導致 Out of memory。因此，若要查看資料，建議使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;take(n)&lt;/code&gt; 這個 Action 操作。此外，撰寫 Spark 程式時，盡量多翻閱&lt;a href=&quot;http://spark.apache.org/docs/latest/api/python/pyspark.sql.html&quot;&gt;文件&lt;/a&gt;查看是否有 api 可以達到所想要的目的，並充分使用到 Spark Driver-Executors 架構下的效能。&lt;/p&gt;
+
+&lt;h2 id=&quot;spark-rdd-補充文件&quot;&gt;Spark RDD 補充文件&lt;/h2&gt;
+
+&lt;p&gt;本次課程中是以 Spark DataFrame 作為分析工具，並沒有提到 Spark RDD，若對 Spark RDD 有興趣者，可參閱此&lt;a href=&quot;http://eighty20.cc/apps/e2-spk-v01/present/e2-spk-s01/index.html#/13&quot;&gt;文件&lt;/a&gt;。&lt;/p&gt;
+</description>
+        <pubDate>Wed, 10 Aug 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/08/10/CS105x-Introduction-to-Apache-Spark-%E7%AD%86%E8%A8%98(%E4%B8%80).html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/08/10/CS105x-Introduction-to-Apache-Spark-%E7%AD%86%E8%A8%98(%E4%B8%80).html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>How Will The Robotics Revolution Influence Employment?</title>
+        <description>&lt;p class=&quot;message&quot;&gt;
+  This essay represents my viewpoint on whether advances in robotic will displace more jobs than they create. 
+&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;In March 2016 AlphaGo, a program developed by Google to play Go, beat a South Korean master Lee Sedol in a five-game match. Although AlphaGo’s 4-1 victory was a historic stride for researchers investigating artificial intelligence (AI hereafter), there was a mounting concern as to whether the advances in AI and robotics would sweep humans out of the economy. As a matter of fact, pessimists have contended that AI and robotics would render many jobless. As noted in Cannon (2015), robots could automate every work that can be automated. Robots have replaced hardware store clerks, and IBM Watson is substituting researchers through parsing every written study. However, people who hold this pessimistic view fail to take into account several facts that advances in robotics would redefine and create jobs. Also, they would free people from day-to-day drudgery and enable people to allocate their time and energy more effectively.&lt;/p&gt;
+
+&lt;p&gt;Certainly, displacement of workers from automation seems inevitable. As shown in Frey &amp;amp; Osborne (2013), 47 percent of total employment in US would be potentially taken by automation in a decade or two. But just as technological progress in other areas did, advances in robotics would redefine our notion of work, and give rise to new types of work in the future. Namely, robots’ ascendancy would offer a window of opportunity for humans to revisit the notion of work and to explore new possibility of work. History has witnessed that new technology generally led to a new wave of jobs, given that people plays a vital role in maintaining advanced technology tools (Cerf, 2015; Kende, 2015). Therefore, the integration of robots into our workplace and daily lives would increase the demand of well-trained robotic technicians. Moreover, Hendler (2015) argued that humans would adapt to new technologies by searching new forms of employment, and hence new kinds of jobs that we cannot imagine currently would be spurred into existence, just as the advent of the computer has created many computer-related jobs, such as software programmers. To put it briefly, through automation technology, new jobs would emerge and offset the decrease of traditional jobs, and might increase the entire number of job opportunities.&lt;/p&gt;
+
+&lt;p&gt;Furthermore, with technological progress in robotics, humans could develop new approaches to tackle their work more efficiently by an adroit adoption of robots in the workplace. To be sure, due to a cognitive mechanism referred as the “uncanny valley” (Mori, 1970), humans might have an innate uneasiness when working with robots, especially human-like ones. Nevertheless, the collaboration with robots could extricate humans from physically difficult and tedious jobs, such as lifting heavy objects and crunching numbers (Rus, 2015). Consequently, automation would allow people to focus their energy and resources on tasks that require a higher level of cognitive processing capacity. On the other hand, people could solicit assistance from their intelligent digital agents that can process a deluge of information, so they could focus on making sound health promotion decisions (Kreps, 2015). Brabham (2015) also pointed out that telemedicine applications/robots could take blood pressure and draw blood, and thus the use of robots in medical filed would allow people to zoom in on delivering more complex services. As can be seen from the above-mentioned scenarios, automation would allow humans to perform their work more effectively.&lt;/p&gt;
+
+&lt;p&gt;While it is true that current education systems have difficulty equipping their students with skills that can take advantage of the opportunities created by robotics (Alexander, 2015; Rheingold, 2015), robotic technology would not advance so far as to cripple the job market at least in the next decade. As noted in Clark (2015), though automation would constitute a threat to low-tier workers in the service industry, the service jobs would not be truly automated within the next decade; instead, they would be delivered with higher quality with the help of robots and the same level of human involvement. Of equal importance to note is that governments would try to mitigate the impact robotic technology would have on employment, given that people could revolt if they are disaffected with their job prospects, as one can see from the Occupy Wall Street movement and violent economic uprisings in Greece (Bryajolfsson and McAfee, 2015). As discussed above, robotic technology would not bring about immediate unemployment problems, and its adverse effect would be alleviated by governments.&lt;/p&gt;
+
+&lt;p&gt;In summary, this essay concludes that advances in robotic technology would be beneficial to the job market. They could create new kinds of jobs and improve the quality of human work. This study also shows that human labor would not be entirely replaced by robots in the near future. Future research should be directed at exploring at how to accustom workers to newly created jobs through educational systems, so workers would be able to take full advantage of the convenience robots bring to them.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 05 Aug 2016 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2016/08/05/How-Will-The-Robotics-Revolution-Influence-Employment.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/08/05/How-Will-The-Robotics-Revolution-Influence-Employment.html</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

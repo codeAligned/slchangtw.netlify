@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html ⚡ lang="en">
+  <head>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>
+  <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>Tidy Data</title>
+  <meta name="description" content="在之前的文章中，已介紹資料的長格式與寬格式。延續此介紹，本文說明另外一種資料格式 - Tidy Data。並說明 Tidy Data 與長寬格式資料的關係。">
+
+  <link rel="canonical" href="http://localhost:4000/2016/10/10/tidy-data.html">
+  <link rel="alternate" type="application/rss+xml" title="Shun-Lung's Blog" href="http://localhost:4000/feed.xml">
+
+  <script type="application/ld+json">
+  
+{
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": "http://localhost:4000/2016/10/10/tidy-data.html",
+  "headline": "Tidy Data",
+  "datePublished": "2016-10-10T00:00:00+08:00",
+  "dateModified": "2016-10-10T00:00:00+08:00",
+  "description": "在之前的文章中，已介紹資料的長格式與寬格式。延續此介紹，本文說明另外一種資料格式 - Tidy Data。並說明 Tidy Data 與長寬格式資料的關係。",
+  "author": {
+    "@type": "Person",
+    "name": "Shun-Lung Chang"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Shun-Lung's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:4000/images/logo.png",
+      "width": "60",
+      "height": "60"
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "http://localhost:4000/images/logo.png",
+    "height": "60",
+    "width": "60"
+  }
+}
+
+  </script>
+
+  <style amp-custom>
+  
+  /**
+ * Syntax highlighting styles
+ */
+.highlight {
+  background: #fff; }
+  .highlighter-rouge .highlight {
+    background: #eef; }
+  .highlight .c {
+    color: #998;
+    font-style: italic; }
+  .highlight .err {
+    color: #a61717;
+    background-color: #e3d2d2; }
+  .highlight .k {
+    font-weight: bold; }
+  .highlight .o {
+    font-weight: bold; }
+  .highlight .cm {
+    color: #998;
+    font-style: italic; }
+  .highlight .cp {
+    color: #999;
+    font-weight: bold; }
+  .highlight .c1 {
+    color: #998;
+    font-style: italic; }
+  .highlight .cs {
+    color: #999;
+    font-weight: bold;
+    font-style: italic; }
+  .highlight .gd {
+    color: #000;
+    background-color: #fdd; }
+  .highlight .gd .x {
+    color: #000;
+    background-color: #faa; }
+  .highlight .ge {
+    font-style: italic; }
+  .highlight .gr {
+    color: #a00; }
+  .highlight .gh {
+    color: #999; }
+  .highlight .gi {
+    color: #000;
+    background-color: #dfd; }
+  .highlight .gi .x {
+    color: #000;
+    background-color: #afa; }
+  .highlight .go {
+    color: #888; }
+  .highlight .gp {
+    color: #555; }
+  .highlight .gs {
+    font-weight: bold; }
+  .highlight .gu {
+    color: #aaa; }
+  .highlight .gt {
+    color: #a00; }
+  .highlight .kc {
+    font-weight: bold; }
+  .highlight .kd {
+    font-weight: bold; }
+  .highlight .kp {
+    font-weight: bold; }
+  .highlight .kr {
+    font-weight: bold; }
+  .highlight .kt {
+    color: #458;
+    font-weight: bold; }
+  .highlight .m {
+    color: #099; }
+  .highlight .s {
+    color: #d14; }
+  .highlight .na {
+    color: #008080; }
+  .highlight .nb {
+    color: #0086B3; }
+  .highlight .nc {
+    color: #458;
+    font-weight: bold; }
+  .highlight .no {
+    color: #008080; }
+  .highlight .ni {
+    color: #800080; }
+  .highlight .ne {
+    color: #900;
+    font-weight: bold; }
+  .highlight .nf {
+    color: #900;
+    font-weight: bold; }
+  .highlight .nn {
+    color: #555; }
+  .highlight .nt {
+    color: #000080; }
+  .highlight .nv {
+    color: #008080; }
+  .highlight .ow {
+    font-weight: bold; }
+  .highlight .w {
+    color: #bbb; }
+  .highlight .mf {
+    color: #099; }
+  .highlight .mh {
+    color: #099; }
+  .highlight .mi {
+    color: #099; }
+  .highlight .mo {
+    color: #099; }
+  .highlight .sb {
+    color: #d14; }
+  .highlight .sc {
+    color: #d14; }
+  .highlight .sd {
+    color: #d14; }
+  .highlight .s2 {
+    color: #d14; }
+  .highlight .se {
+    color: #d14; }
+  .highlight .sh {
+    color: #d14; }
+  .highlight .si {
+    color: #d14; }
+  .highlight .sx {
+    color: #d14; }
+  .highlight .sr {
+    color: #009926; }
+  .highlight .s1 {
+    color: #d14; }
+  .highlight .ss {
+    color: #990073; }
+  .highlight .bp {
+    color: #999; }
+  .highlight .vc {
+    color: #008080; }
+  .highlight .vg {
+    color: #008080; }
+  .highlight .vi {
+    color: #008080; }
+  .highlight .il {
+    color: #099; }
+
+.icon > svg {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle; }
+  .icon > svg path {
+    fill: #828282; }
+
+amp-img {
+  background-color: grey; }
+
+.cf:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+main {
+  display: block; }
+
+body {
+  background-color: #fff;
+  font-family: "Helvetica Neue", "Open Sans", Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-feature-settings: "liga=1, dlig=1";
+  -ms-font-feature-settings: "liga", "dlig";
+  -webkit-font-feature-settings: "liga", "dlig";
+  -o-font-feature-settings: "liga", "dlig";
+  font-feature-settings: "liga", "dlig"; }
+
+.site-header {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 16px auto 0 auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+  @media only screen and (max-width: 800px) {
+    .site-header {
+      padding: 0 16px; } }
+  .site-header .page-links {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-weight: 200;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 30px; }
+    .site-header .page-links a {
+      text-decoration: none;
+      color: #999999; }
+      .site-header .page-links a:hover {
+        color: #333333; }
+
+.blog-header {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+  .blog-header .blog-title {
+    margin-bottom: 8px;
+    font-size: 50px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    outline: 0;
+    line-height: 50px;
+    word-break: break-word;
+    color: #333333; }
+  .blog-header .blog-description {
+    font-size: 28px;
+    margin: 0 0 20px;
+    padding: 0;
+    line-height: 1.2;
+    color: #666666;
+    font-weight: 300; }
+
+.content {
+  width: 100%;
+  max-width: 700px;
+  margin: 25px auto 0 auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+  @media only screen and (max-width: 800px) {
+    .content {
+      padding: 0 16px; } }
+  .content article {
+    padding: 20px 0;
+    border-bottom: 1px solid #f2f2f0; }
+    .content article:last-child {
+      border-bottom: 0px; }
+    .content article .post-title {
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      font-style: normal;
+      display: block;
+      font-size: 36px;
+      line-height: 1.15;
+      margin: 0 0; }
+      .content article .post-title a {
+        text-decoration: none;
+        color: #333332; }
+        .content article .post-title a:hover {
+          text-decoration: none; }
+    .content article .post-excerpt {
+      letter-spacing: -0.02em;
+      font-weight: 300;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1.59;
+      color: #666665; }
+    .content article .post-meta {
+      font-size: 14px;
+      color: #b3b3b1;
+      line-height: 30px; }
+      .content article .post-meta a {
+        color: #b3b3b1;
+        text-decoration: none; }
+        .content article .post-meta a:hover {
+          text-decoration: underline; }
+
+.post-template .content {
+  max-width: 700px; }
+
+.index-headline {
+  border-top: 1px solid #dededc;
+  margin: 0;
+  padding: 16px 0; }
+  .index-headline span {
+    color: #b3b3b1;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px; }
+
+.pagination {
+  text-align: center;
+  padding: 16px 0 0;
+  font-size: 12px; }
+  .pagination a {
+    color: #999999;
+    text-decoration: none; }
+    .pagination a:hover {
+      color: #333333; }
+
+.site-footer {
+  margin: 0 auto;
+  padding: 48px 0;
+  width: 100%;
+  max-width: 700px;
+  font-size: 12px;
+  text-align: center;
+  color: #999999;
+  line-height: 17.6px; }
+  .site-footer a {
+    color: #666666;
+    text-decoration: none; }
+    .site-footer a:hover {
+      color: #333333; }
+
+.post .post-meta {
+  font-family: "Helvetica Neue", "Open Sans", Arial, Helvetica, sans-serif; }
+.post .post-title {
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -0.04em;
+  font-size: 50px;
+  line-height: 1.1;
+  color: #333332;
+  margin-bottom: 50px; }
+.post .author-image {
+  background-image: url();
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  margin-right: 8px;
+  margin-bottom: -10px;
+  float: left;
+  background-size: cover;
+  border-radius: 100%;
+  text-indent: -9999px; }
+.post .post-meta-text {
+  color: #b3b3b1;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  overflow: hidden;
+  font-family: "Helvetica Neue", "Open Sans", Arial, Helvetica, sans-serif;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+.post .post-content {
+  width: 100%;
+  font-family: Georgia, Cambria, "Times New Roman", Times, "Lora", serif;
+  color: #333333; }
+  .post .post-content h1, .post .post-content h2, .post .post-content h3 {
+    font-family: "Helvetica Neue", "Open Sans", Arial, Helvetica, sans-serif; }
+  .post .post-content h3, .post .post-content h4, .post .post-content h5, .post .post-content h6 {
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1.3;
+    margin-top: 50px;
+    margin-bottom: 0px;
+    font-family: "Helvetica Neue", "Open Sans", Arial, Helvetica, sans-serif; }
+  .post .post-content h3 {
+    font-size: 36px; }
+  .post .post-content h2, .post .post-content h1 {
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 42px;
+    line-height: 1.2;
+    margin-top: 50px;
+    margin-bottom: 0px; }
+  .post .post-content table {
+    border-collapse: collapse; }
+  .post .post-content table, .post .post-content th, .post .post-content td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: left; }
+  .post .post-content p {
+    font-weight: 400;
+    font-style: normal;
+    font-size: 22px;
+    line-height: 1.59;
+    letter-spacing: -.002em;
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: #333333;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto; }
+  .post .post-content a {
+    color: #333333;
+    text-decoration: underline; }
+  .post .post-content amp-img, .post .post-content amp-youtube {
+    margin-top: 30px; }
+  .post .post-content figure {
+    margin: 0;
+    padding: 0 0 30px; }
+  .post .post-content figcaption {
+    font-weight: 400;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.3;
+    color: #666665;
+    outline: 0;
+    z-index: 300;
+    text-align: center; }
+  .post .post-content hr {
+    border: 0;
+    padding: 0;
+    display: block;
+    width: 15%;
+    margin: 30px auto;
+    border: 0px solid #dddddd;
+    border-top: 1px solid #dddddd; }
+  .post .post-content blockquote {
+    margin: 0 0 30px;
+    margin-left: -26px;
+    border-left: 3px solid #57ad68;
+    padding-left: 20px; }
+    .post .post-content blockquote p {
+      letter-spacing: 0.01rem;
+      font-weight: 400;
+      mborder-left: 3px solid #57ad68;
+      mpadding-left: 20px;
+      mmargin-left: -26px;
+      padding-bottom: 3px; }
+  .post .post-content ul, .post .post-content ol {
+    padding: 0 0 30px;
+    margin: 0; }
+  .post .post-content li {
+    padding: 0;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 23px;
+    line-height: 30px;
+    margin-left: 30px;
+    margin-bottom: 12px;
+    padding-top: 2px; }
+    .post .post-content li p {
+      padding: 0 0 1.618rem; }
+  .post .post-content ol li {
+    list-style-type: decimal; }
+.post .bottom-teaser {
+  padding: 50px 0 0 0;
+  font-family: "Helvetica Neue", "Open Sans", Arial, Helvetica, sans-serif; }
+  .post .bottom-teaser hr {
+    border: 0;
+    padding: 0;
+    display: block;
+    width: 15%;
+    margin: 16px 0 16px 100px;
+    border: 0px solid #dddddd;
+    border-top: 1px solid #dddddd; }
+  .post .bottom-teaser .isLeft {
+    float: left;
+    width: 47%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+    @media only screen and (max-width: 800px) {
+      .post .bottom-teaser .isLeft {
+        width: 100%;
+        padding-bottom: 32px; } }
+    .post .bottom-teaser .isLeft .bio {
+      margin-top: 18px;
+      margin-bottom: 18px; }
+    .post .bottom-teaser .isLeft .username {
+      margin-left: 4px;
+      margin-right: 18px;
+      margin-bottom: 18px; }
+    .post .bottom-teaser .isLeft .index-headline {
+      padding-bottom: 32px; }
+    .post .bottom-teaser .isLeft a {
+      color: black;
+      text-decoration: none; }
+      .post .bottom-teaser .isLeft a:hover {
+        color: #333333;
+        text-decoration: underline; }
+    .post .bottom-teaser .isLeft .author-image {
+      display: block;
+      width: 80px;
+      height: 80px;
+      float: left;
+      background-size: cover;
+      border-radius: 100%;
+      text-indent: -9999px; }
+    .post .bottom-teaser .isLeft h4 {
+      font-size: 18px;
+      line-height: 1.1;
+      font-weight: 700;
+      padding: 0;
+      margin: 0;
+      padding-left: 100px; }
+    .post .bottom-teaser .isLeft p {
+      font-size: 14px;
+      line-height: 1.3;
+      font-weight: 400;
+      padding: 0;
+      margin: 0;
+      padding-left: 100px; }
+      .post .bottom-teaser .isLeft p.published {
+        color: #999999; }
+  .post .bottom-teaser .isRight {
+    float: right;
+    width: 47%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+    @media only screen and (max-width: 800px) {
+      .post .bottom-teaser .isRight {
+        width: 100%; } }
+    .post .bottom-teaser .isRight .index-headline {
+      padding-bottom: 32px; }
+    .post .bottom-teaser .isRight .site-footer {
+      margin: 0;
+      padding: 0;
+      color: #333333;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.3;
+      color: #999999; }
+      .post .bottom-teaser .isRight .site-footer a {
+        color: #333333;
+        text-decoration: none; }
+        .post .bottom-teaser .isRight .site-footer a:hover {
+          text-decoration: underline; }
+      .post .bottom-teaser .isRight .site-footer .poweredby {
+        display: block;
+        padding-bottom: 18px;
+        font-weight: 700;
+        color: #333333; }
+
+.share {
+  text-align: right;
+  padding: 20px 0 0; }
+  .share a {
+    text-decoration: none;
+    color: #bbbbbb;
+    padding-left: 12px; }
+    .share a .hidden {
+      display: none; }
+    .share a:hover {
+      color: #333333; }
+
+pre,
+code {
+  font-size: 15px;
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
+  background-color: #eeeeff; }
+
+code {
+  padding: 1px 5px; }
+
+pre {
+  padding: 8px 12px;
+  overflow-x: scroll; }
+  pre > code {
+    border: 0;
+    padding-right: 0;
+    padding-left: 0; }
+
+.pagination .disabled {
+  opacity: 0; }
+
+  </style>
+
+
+
+  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+</head>
+
+  <body>
+    <header class="site-header">
+  <a href="/" class="logo"><span class="logo"><amp-img src="/images/logo.png" width="48" height="48" /></span></a>
+
+  <div class="page-links">
+    <a class="page-link" href="/">Home</a>
+    
+      
+      • <a class="page-link" href="/about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</header>
+
+
+    <main class="content" role="main">
+  <article class="post">
+    <div class="post-meta">
+      <h1 class="post-title">Tidy Data</h1>
+    </div>
+
+    <section class="post-content">
+      <a name="topofpage"></a>
+      <p>在之前的文章中，已介紹資料的長格式與寬格式。延續此介紹，本文說明另外一種資料格式 - Tidy Data。並說明 Tidy Data 與長寬格式資料的關係。</p>
+
+<!--more-->
+
+<p>本文源於 Hadley Wickham 說明 <a href="http://vita.had.co.nz/papers/tidy-data.pdf">Tidy data</a> 的文章，而本文中也會以此文章中的例子為主。</p>
+
+<h2 id="tidy-data-的定義">Tidy Data 的定義</h2>
+
+<p>首先，一個資料集 (dataset) 是由許多觀測值 (value) 組成，而觀測值會是數值(為 quantitative，如身高、體重)或字串(為 qualitative，如性別、年份等)其中一種。而每一個觀測值是屬於某一變數 (variable) 與某一觀測樣本 (observation)。 變數代表資料所衡量與記錄的屬性，觀測樣表示背衡量的人事物。例如 A 的體重為 60 kg，則 變數為體重，觀測樣本為 A，觀測值則為 60。</p>
+
+<p>有了變數與觀測樣本的概念後，在 Hadley 的文章中，定義 Tidy Data 如下。</p>
+
+<ol>
+  <li>
+    <p>一個變數就是一行 (Each variable forms a column)</p>
+  </li>
+  <li>
+    <p>一個觀測樣本就是一列 (Each observation forms a row)</p>
+  </li>
+  <li>
+    <p>每一觀測單位是一張資料表 (Each type of observational unit forms a table)</p>
+  </li>
+</ol>
+
+<p>首先說明前面兩點，舉例來說， Hadley 文章的表 4 ，其變數有 religion、income 與 frequency。然而，各行標記的是 income 的觀測值 (income 的 value 彙整的級距)，因此並非 Tidy Data。由此例可知，此種觀測值標記在行的非 Tidy Data，較像寬格式的資料，因為欄位數可能會因資料增加而變動。而表 6 為表 4 的 Tidy Data，可看出 Tidy Data 較像長格式的資料。</p>
+
+<p>表 7 也是一個觀測值標記在行的例子。而經過整理的表 8，將 Week 變成一行變數，再存放觀測值。然而表 8 仍非 Tidy Data，因為違反定義第三點。第三點說的是每一個觀測單位形成一張資料表，以表 8 來說，觀測單位包含歌曲基本資料 (song) 與每週排行 (rank)。因此，表中歌曲的基本資料會一直重複出現。而若要符合 Tidy Data，應該將此表拆成兩份，觀測單位一份以歌曲基本資料，一份以每週排行，其結果如表 13。而也有另一種情況是一個觀測單位分散在許多表，此時就要透過列或欄的方式合併各表，語法範例可見<a href="/2016/09/28/dplyr-and-excel_2">從 Excel 學習 R 的 dplyr (二)</a> 的合併資料部份。</p>
+
+<p>此外，當 value 存放兩個變數時，也非 Tidy Data。例如表 10(a) 的 column 變數，其 觀測值存放性別跟年齡級距兩個變數。因此需要再分成兩行，結果如表 10(b)。</p>
+
+<p>將資料整理成 Tidy Data 可有助於資料分析。例如，若是資料的觀測值存放兩個變數的值，若只要分析其中一個變數，必要將其分為兩行變數才能進行分析。所以，基本上將資料先整理為 Tidy Data 會讓資料分析過程更加順利。</p>
+
+<p>然而，Tidy Data 亦不一定能完全符合繪圖目的。舉例來說，表 12(b) 是 Tidy Data，但若想透過 R 的 ggplot2 繪製 tmax 與 tmin 兩條趨勢線於同一張圖，表 12(a) 反而是較容易的，範例如下。因此，整理資料的過程中，謹記資料格式的呈現要能快速準確地反映繪圖與分析目的，不必執著於一定要是 Tidy Data。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>library(ggplot2)
+
+ggplot(data_12a, aes(x = date, y = value, colour = element)) +
+	geom_line()
+</code></pre>
+</div>
+
+<h2 id="總結">總結</h2>
+
+<p>Tidy Data 的目的主要是有助於資料分析。然而並不代表其一定能符合分析過程中每個目的。例如在表格呈現，寬格式的資料會容易判讀(試比較文章中的表 4 跟表 6)。因此，資料整理過程中，最重要的是要問目的為何，以及手上有的工具要搭配何種資料格式能快速達到目的。</p>
+
+
+    </section>
+    <footer class="post-footer">
+      <section class="share">
+        <a class="icon" href="https://twitter.com/intent/tweet?url=http://localhost:4000/2016/10/10/tidy-data&text=Tidy+Data&via=" target="_blank">
+          Share on
+          
+<span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span>
+
+
+        </a>
+      </section>
+    </footer>
+    <div class="bottom-teaser cf">
+      <div class="isLeft">
+        <h5 class="index-headline featured"><span>Written by</span></h5>
+        <section class="author">
+          <div class="author-image"></div>
+          <h4>Shun-Lung Chang</h4>
+
+          <p>
+            <span>
+              
+            </span>
+
+            <span>
+              
+            </span>
+          </p>
+          <hr>
+          <p class="published">Published <time datetime="2016-10-10 00:00">10 Oct 2016</time></p>
+        </section>
+      </div>
+      <div class="isRight">
+        <h5 class="index-headline featured"><span>Supported by</span></h5>
+        <footer class="site-footer">
+          <section class="poweredby">Published with <a href="http://jekyllrb.com"> Jekyll</a> and <a href="https://github.com/ageitgey/amplify">Amplify</a></section>
+          <a class="subscribe" href="/feed.xml"> <span class="tooltip"> <i class="fa fa-rss"></i> You should subscribe to my feed.</span></a>
+          <div class="inner">
+            <section class="copyright">All content copyright <a href="mailto:edi7709@gmail.com">Shun-Lung Chang</a> &copy; 2017<br>All rights reserved.</section>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </article>
+</main>
+
+
+    
+  </body>
+</html>
